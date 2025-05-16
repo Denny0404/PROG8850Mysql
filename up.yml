@@ -1,0 +1,16 @@
+- name: bootstrap mysql
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: docker compose up
+      community.docker.docker_compose_v2:
+        project_src: .
+        files:
+        - mysql-adminer.yml
+        state: present
+    - name: Install mysql-client
+      ansible.builtin.package:
+        name: mysql-client
+        update_cache: yes
+        state: present
+      become: yes
